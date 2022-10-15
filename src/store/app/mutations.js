@@ -17,10 +17,16 @@ export default {
   setPhotosTimeline(state, payload) {
     state.photosTimeline = payload;
   },
+  morePhotosTimeline(state, payload) {
+    state.photosTimeline = [...state.photosTimeline, ...payload];
+  },
   setSearchText(state, payload) {
     state.searchText = payload;
   },
   toggleFilterSection(state) {
     state.filterSection = !state.filterSection;
+  },
+  setFetchStatus(state, payload) {
+    state.fetchStatus = payload
   }
 };

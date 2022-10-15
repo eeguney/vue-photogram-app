@@ -16,5 +16,8 @@ export default {
   },
   getFilterSection(state) {
     return state.filterSection;
+  },
+  getFetchStatus(state) {
+    return state.fetchStatus;
   }
 };

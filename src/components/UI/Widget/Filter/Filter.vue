@@ -19,12 +19,7 @@
       >
         Apply
       </button>
-      <button
-        type="button"
-        aria-label="rest"
-        class="reset"
-        @click="reset"
-      >
+      <button type="button" aria-label="rest" class="reset" @click="reset">
         Reset
       </button>
     </div>

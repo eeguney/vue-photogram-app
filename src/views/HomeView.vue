@@ -10,13 +10,20 @@
           <vue-masonry-wall
             :items="getPhotosFromStorage"
             :options="{ width: 300, padding: 10 }"
-            @append="append"
             v-if="load"
           >
             <template v-slot:default="{ item }">
               <Card :data="item" />
             </template>
           </vue-masonry-wall>
+          <!-- infinite scroll loading -->
+          <span v-show="$store.getters.getFetchStatus" class="infinite-status">
+            <font-awesome-icon
+              class="loading-spinner"
+              :icon="['fas', 'fa-spinner']"
+              size="lg"
+            />Loading...
+          </span>
         </template>
 
         <InfoAlert
@@ -26,7 +33,6 @@
       </div>
 
       <Albums :albums="getAlbumsFromStorage" />
-
     </div>
   </Layout>
 </template>
@@ -39,6 +45,7 @@ import Loading from "@/components/UI/Loading.vue";
 import Albums from "@/components/UI/Widget/Albums.vue";
 import TimelineHeader from "@/components/UI/TimelineHeader.vue";
 import InfoAlert from "@/components/UI/Alert/Info.vue";
+import { nextTick } from "vue";
 
 export default {
   components: {
@@ -58,6 +65,11 @@ export default {
   async created() {
     await this.$store.dispatch("fetchAll");
   },
+  methods: {
+    async fetchMore() {
+      await this.$store.dispatch("fetchMore");
+    },
+  },
   computed: {
     getPhotosFromStorage() {
       return this.$store.getters.getPhotosTimeline;
@@ -66,8 +78,22 @@ export default {
       return this.$store.getters.getAlbums;
     },
   },
+  async updated() {
+    await nextTick();
+    if (this.load == true) {
+      setTimeout(() => {
+        window.onscroll = () => {
+          const div = document.querySelector(".content-inner");
+          if (window.innerHeight + window.scrollY >= div.offsetHeight) {
+            this.fetchMore();
+            this.$state.commit("setFetchStatus", false);
+          }
+        };
+      }, 1500);
+    }
+  },
   watch: {
-    getPhotosFromStorage(last) {
+    async getPhotosFromStorage(last) {
       if (last == null || last == []) {
         this.load = false;
         if (this.getSearchTextFromStorage == "") {
@@ -99,4 +125,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.infinite-status {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  font-size: 1rem;
+  align-items: center;
+  svg {
+    margin-right: 1rem;
+  }
+}
+</style>

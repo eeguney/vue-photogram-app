@@ -74,6 +74,7 @@ export default {
           urlGenerator([
             { type: "order", value: "popular" },
             { type: "perPage", value: 20 },
+            { type: "page", value: 1 },
           ])
         ).then(({ data }) => {
           commit("setPhotosTimeline", data.hits);
@@ -91,6 +92,7 @@ export default {
           urlGenerator([
             { type: "order", value: "latest" },
             { type: "perPage", value: 20 },
+            { type: "page", value: 1 },
           ])
         ).then(({ data }) => {
           commit("setPhotosTimeline", data.hits);
@@ -126,9 +128,7 @@ export default {
     commit("setPhotosTimeline", null);
     try {
       await Promise.all([
-        Axios.get(
-          urlGenerator(payload)
-        ).then(({ data }) => {
+        Axios.get(urlGenerator(payload)).then(({ data }) => {
           if (data) {
             if (data.hits.length > 0) {
               commit("setPhotosTimeline", data.hits);
@@ -140,8 +140,26 @@ export default {
       console.log(error);
     }
   },
+  async fetchMore({ commit }) {
+    commit("setFetchStatus", true);
+    try {
+      await Promise.all([
+        Axios.get(
+          urlGenerator([{ type: "page", value: urlParameters.page + 1 }])
+        ).then(({ data }) => {
+          if (data) {
+            if (data.hits.length > 0) {
+              commit("morePhotosTimeline", data.hits);
+            }
+          }
+        }),
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  },
   destroySearching({ commit, dispatch }) {
     commit("setSearchText", null);
-    dispatch("filter", [{ type: "q", value: "" }])
+    dispatch("filter", [{ type: "q", value: "" }]);
   },
 };

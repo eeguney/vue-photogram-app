@@ -173,8 +173,11 @@ button:focus-visible {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-@media screen and (min-width: var(--md-width)) {
+@media screen and (min-width: 1024px) {
   .md-ml-1 {
+    margin-left: 1rem;
+  }
+  .md-pl-1 {
     margin-left: 1rem;
   }
   .md-px-1 {
@@ -252,6 +255,17 @@ button:focus-visible {
   background: #00000099;
   z-index: 1000;
   backdrop-filter: blur(3px);
+}
+.loading-spinner {
+  animation: spin 2s ease infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes fromTopWithFade {
   from {

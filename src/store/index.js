@@ -16,6 +16,7 @@ export default new Vuex.Store({
     photosTimeline: [],
     searchText: "",
     filterSection: false,
+    fetchStatus: false,
     categories: [
       "backgrounds",
       "fashion",

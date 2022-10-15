@@ -1,5 +1,5 @@
 <template>
-  <div class="page" :class="{ col: col, loginPage: login }">
+  <div class="page" :class="{ col: col, loginPage: login }" >
     <div class="container">
       <Aside v-if="sidebar" />
       <div
@@ -91,6 +91,7 @@ export default {
       .content-inner {
         flex: 1;
         padding: 0 1rem;
+        min-height: 120vh;
         border-top: 1px solid var(--second-background-color);
       }
     }
