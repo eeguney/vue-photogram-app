@@ -37,6 +37,7 @@ const defaultProps = {
   orientation: { type: "orientation", value: "all" },
   colors: { type: "colors", value: "null" },
   safesearch: { type: "safesearch", value: "false" },
+  page: { type: "page", value: 1 }
 };
 
 export default {
