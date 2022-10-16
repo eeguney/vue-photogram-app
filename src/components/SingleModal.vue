@@ -2,8 +2,8 @@
   <div class="fixed p-2" v-if="photo">
     <div class="single-layout col center">
       <div class="image-post">
-        <Loading v-show="!imageload" single />
-        <header class="row" v-show="imageload">
+        <Loading v-show="!getImageLoad" single />
+        <header class="row" v-show="getImageLoad">
           <span class="category">{{ photo.type }}</span>
           <div class="photo-info row">
             <li>
@@ -17,14 +17,13 @@
           </div>
         </header>
         <img
-          :src="load && photo.largeImageURL"
+          :src="photo.largeImageURL"
           :alt="photo.tags"
           class="single-image"
-          loading="lazy"
+          v-show="getImageLoad"
           @load="imageload = true"
-          v-show="imageload"
         />
-        <footer class="row justify-center" v-show="imageload">
+        <footer class="row justify-center" v-show="getImageLoad">
           {{ photo.tags }}
         </footer>
       </div>
@@ -44,9 +43,13 @@ export default {
   data() {
     return {
       photo: [],
-      load: false,
       imageload: false,
     };
+  },
+  computed: {
+    getImageLoad() {
+      return this.imageload;
+    }
   },
   async mounted() {
     try {
@@ -55,9 +58,6 @@ export default {
       );
       if (response) {
         this.photo = { ...response.data.hits[0] };
-        setTimeout(() => {
-          this.load = true;
-        }, 1000);
       } else {
         this.photo = null;
       }
