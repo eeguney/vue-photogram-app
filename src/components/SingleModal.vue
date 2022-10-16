@@ -81,7 +81,7 @@ export default {
     border-radius: 1rem;
     box-shadow: 0 3px 18px -5px #000;
     background-color: var(--main-background-color);
-    max-height: calc(100% - 300px);
+    max-height: calc(100vh - 200px);
   }
 }
 .image-post {
