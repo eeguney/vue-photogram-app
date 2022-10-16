@@ -1,39 +1,43 @@
 <template>
-  <div class="page" :class="{ col: col, loginPage: login }" >
+  <div
+    class="page"
+    :class="{ col: col, loginPage: login, overflowHiddenW100: backdrop }"
+  >
     <div class="container">
-      <Aside v-if="sidebar" />
+      <Aside v-if="sidebar" :footer="footer" />
       <div
         class="content col"
         :class="{ center: center, h100: login, center: login }"
       >
         <Header v-if="header" />
-        <div class="content-inner" v-if="!login">
+        <div
+          class="content-inner"
+          :class="{ heightAuto: heightAuto }"
+          v-if="!login"
+        >
           <slot />
         </div>
         <slot v-else />
-        <Footer v-if="footer" />
       </div>
     </div>
     <div
       class="backdrop-on-mobile"
       v-show="filterSection"
       @click="$store.commit('toggleFilterSection')"
-    >
-      {{ filterSection }}
-    </div>
+    ></div>
+    <div class="backdrop-on-modal" v-show="backdrop"></div>
   </div>
 </template>
 
 <script>
 import Aside from "@/components/Aside.vue";
-import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
+
 export default {
   name: "LayoutComponent",
   components: {
     Aside,
     Header,
-    Footer,
   },
   props: {
     header: {
@@ -56,10 +60,14 @@ export default {
       default: false,
     },
     login: Boolean,
+    heightAuto: Boolean,
   },
   computed: {
     filterSection() {
       return this.$store.getters.getFilterSection;
+    },
+    backdrop() {
+      return this.$store.getters.getBackdrop;
     },
   },
 };
@@ -70,6 +78,10 @@ export default {
   display: flex;
   background-color: var(--main-background-color);
   min-height: 100vh;
+  &.overflowHiddenW100 {
+    overflow: hidden;
+    height: 100vh;
+  }
   &.loginPage {
     background-color: var(--login-background-color);
     @media screen and (min-width: 600px) {
@@ -93,6 +105,9 @@ export default {
         padding: 0 1rem;
         min-height: 120vh;
         border-top: 1px solid var(--second-background-color);
+        &.heightAuto {
+          min-height: auto;
+        }
       }
     }
     @media screen and (min-width: 600px) {

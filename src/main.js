@@ -21,9 +21,10 @@ import {
   faEllipsisVertical,
   faMoon,
   faSun,
-  faFilter
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSquare, faKeyboard } from "@fortawesome/free-regular-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 library.add(
@@ -46,7 +47,8 @@ library.add(
   faEllipsisVertical,
   faMoon,
   faSun,
-  faFilter
+  faFilter,
+  faGithub
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

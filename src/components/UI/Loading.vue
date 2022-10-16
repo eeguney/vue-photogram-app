@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-container center" :class="{ noHeight: noHeight }">
+  <div class="loading-container center" :class="{ noHeight: noHeight, single: single }">
     <div class="loading col">
       <font-awesome-icon
         class="loading-spinner"
@@ -17,6 +17,7 @@ export default {
   props: {
     noHeight: Boolean,
     small: Boolean,
+    single: Boolean
   },
 };
 </script>
@@ -25,6 +26,10 @@ export default {
 .loading-container {
   display: flex;
   margin-top: 30vh;
+  &.single {
+    position: fixed;
+    color: white;
+  }
   &.noHeight {
     height: 100%;
     animation: backgroundChange 1.8s linear infinite;

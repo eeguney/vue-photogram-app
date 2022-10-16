@@ -26,6 +26,9 @@ export default {
   toggleFilterSection(state) {
     state.filterSection = !state.filterSection;
   },
+  toggleBackdrop(state) {
+    state.backdrop = !state.backdrop;
+  },
   setFetchStatus(state, payload) {
     state.fetchStatus = payload
   }

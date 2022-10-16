@@ -1,7 +1,7 @@
 <template>
   <Layout sidebar footer header>
     <div class="row">
-      <div class="col flex-1 py-1 md-pl-1">
+      <div class="col flex-1 py-1 md-pl-1 mb-5">
         <TimelineHeader />
 
         <Loading v-show="!load" />
@@ -27,12 +27,14 @@
         </template>
 
         <InfoAlert
-          v-if="load && getPhotosFromStorage == null"
+          v-if="load & (getPhotosFromStorage == null)"
           text="Ups... 😪 We couldn't find what you're looking for."
         />
       </div>
 
       <Albums :albums="getAlbumsFromStorage" />
+
+      <SingleModal v-if="$route.name == 'photo'" />
     </div>
   </Layout>
 </template>
@@ -45,6 +47,8 @@ import Loading from "@/components/UI/Loading.vue";
 import Albums from "@/components/UI/Widget/Albums.vue";
 import TimelineHeader from "@/components/UI/TimelineHeader.vue";
 import InfoAlert from "@/components/UI/Alert/Info.vue";
+import SingleModal from "@/components/SingleModal.vue";
+
 import { nextTick } from "vue";
 
 export default {
@@ -56,6 +60,7 @@ export default {
     Albums,
     TimelineHeader,
     InfoAlert,
+    SingleModal,
   },
   data() {
     return {
@@ -118,14 +123,30 @@ export default {
           vm.$store.dispatch("fetchPopular");
         });
         break;
+      case "photo":
+        next((vm) => {
+          vm.$store.commit("toggleBackdrop");
+        });
+        break;
       default:
+        next();
         break;
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (from.name == "photo") {
+      this.$store.commit("toggleBackdrop");
+      next();
+    }
+    next();
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.mb-5 {
+  margin-bottom: 5rem;
+}
 .infinite-status {
   display: flex;
   justify-content: center;

@@ -1,7 +1,8 @@
 <template>
-  <div class="card">
+  <router-link :to="{ name: 'photo', params: { id: data.id } }">
+    <div class="card">
     <div class="thumbnail">
-      <img :src="data.webformatURL" class="img" />
+      <img :src="data.webformatURL" class="img" loading="lazy" />
     </div>
     <label>{{ data.tags }} </label>
     <div class="card-info">
@@ -15,6 +16,7 @@
       </li>
     </div>
   </div>
+  </router-link>
 </template>
 
 <script>

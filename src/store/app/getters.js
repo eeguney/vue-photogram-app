@@ -17,6 +17,9 @@ export default {
   getFilterSection(state) {
     return state.filterSection;
   },
+  getBackdrop(state) {
+    return state.backdrop;
+  },
   getFetchStatus(state) {
     return state.fetchStatus;
   }

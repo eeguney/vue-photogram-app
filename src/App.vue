@@ -31,13 +31,12 @@
   --purple-light-color: #a409c9;
   --logo-color: #222;
   --md-width: 1024px;
-
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
   color-scheme: light dark;
-  color: #222;
+  color: #333;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -48,20 +47,12 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #222;
   text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
 a:hover {
-  color: #535bf2;
+  color: #000;
 }
 
 body {
@@ -119,6 +110,12 @@ button:focus-visible {
 .row.center {
   justify-content: center;
 }
+.justify-end {
+  justify-content: flex-end;
+}
+.align-center {
+  align-items: center;
+}
 .m-1 {
   margin: 1rem;
 }
@@ -155,6 +152,9 @@ button:focus-visible {
   margin-top: 1rem;
 }
 .p-1 {
+  padding: 1rem;
+}
+.p-2 {
   padding: 1rem;
 }
 .pl-1 {
@@ -228,6 +228,17 @@ button:focus-visible {
 .mb-1 {
   margin-bottom: 1rem;
 }
+.fixed {
+  z-index: 1001;
+    position: fixed;
+    max-width: 1000px;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 0;
+}
 .close-section {
   position: absolute;
   top: calc(1rem + 7px);
@@ -246,7 +257,8 @@ button:focus-visible {
 .close-section.left {
   right: -8px;
 }
-.backdrop-on-mobile {
+.backdrop-on-mobile,
+.backdrop-on-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -255,6 +267,11 @@ button:focus-visible {
   background: #00000099;
   z-index: 1000;
   backdrop-filter: blur(3px);
+}
+.backdrop-on-modal {
+  background: #00000099;
+  backdrop-filter: blur(10px);
+  animation: fade 0.2s ease;
 }
 .loading-spinner {
   animation: spin 2s ease infinite;
@@ -277,8 +294,16 @@ button:focus-visible {
     transform: translateY(0);
   }
 }
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --main-background-color: #111111;
     --second-background-color: #222222;
@@ -298,8 +323,18 @@ button:focus-visible {
     --logo-color: #d8d8d8;
     color: white;
   }
+  a {
+  font-weight: 500;
+  color: #fff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #fff;
+}
+
   body {
     color: white;
   }
-}
+} */
 </style>

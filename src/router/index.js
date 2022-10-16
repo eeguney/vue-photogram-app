@@ -18,6 +18,11 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/photo/:id",
+    name: "photo",
+    component: HomeView,
+  },
+  {
     path: "/login",
     name: "login",
     component: LoginView,

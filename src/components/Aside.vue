@@ -1,21 +1,29 @@
 <template>
   <aside :class="{openOnMobile: getFilterSection}">
-    <div class="col">
+    <div class="y-auto col">
       <label class="logo p-1">
         <font-awesome-icon :icon="['fas', 'fa-images']" />Photogram</label
       >
       <FilterWidget />
+
+      <Footer v-if="footer" />
+
     </div>
   </aside>
 </template>
 
 <script>
 import FilterWidget from "@/components/UI/Widget/Filter/Filter.vue";
+import Footer from "@/components/Footer.vue";
+
 export default {
   name: "AsideComponent",
-  props: {},
+  props: {
+    footer: Boolean
+  },
   components: {
     FilterWidget,
+    Footer
   },
   data() {
     return {};
@@ -52,8 +60,7 @@ aside {
     }
   }
 
-  .col {
-    flex: 1;
+  .y-auto {
     overflow-y: auto;
     overflow-x: hidden;
   }
