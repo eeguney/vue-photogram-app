@@ -20,6 +20,7 @@
           :src="photo.largeImageURL"
           :alt="photo.tags"
           class="single-image"
+          loading="lazy"
           v-show="getImageLoad"
           @load="imageload = true"
         />
