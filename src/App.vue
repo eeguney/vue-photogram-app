@@ -303,7 +303,7 @@ button:focus-visible {
   }
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
     --main-background-color: #111111;
     --second-background-color: #222222;
@@ -336,5 +336,5 @@ a:hover {
   body {
     color: white;
   }
-} */
+}
 </style>
