@@ -1,13 +1,14 @@
 <template>
-  <aside :class="{openOnMobile: getFilterSection}">
+  <aside :class="{ openOnMobile: getFilterSection }">
     <div class="y-auto col">
-      <label class="logo p-1">
-        <font-awesome-icon :icon="['fas', 'fa-images']" />Photogram</label
-      >
+      <router-link to="/">
+        <label class="logo p-1">
+          <font-awesome-icon :icon="['fas', 'fa-images']" />Photogram</label
+        >
+      </router-link>
       <FilterWidget />
 
       <Footer v-if="footer" />
-
     </div>
   </aside>
 </template>
@@ -19,11 +20,11 @@ import Footer from "@/components/Footer.vue";
 export default {
   name: "AsideComponent",
   props: {
-    footer: Boolean
+    footer: Boolean,
   },
   components: {
     FilterWidget,
-    Footer
+    Footer,
   },
   data() {
     return {};

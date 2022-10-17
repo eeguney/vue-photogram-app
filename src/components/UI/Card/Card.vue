@@ -95,6 +95,11 @@ export default {
           content: ",";
         }
       }
+      &:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 2px;
+      }
     }
   }
   .card-info {

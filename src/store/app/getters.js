@@ -22,5 +22,8 @@ export default {
   },
   getFetchStatus(state) {
     return state.fetchStatus;
+  },
+  getDarkmode(state) {
+    return state.darkmode;
   }
 };

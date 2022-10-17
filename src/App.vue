@@ -6,6 +6,49 @@
   </div>
 </template>
 
+<script>
+export default {
+  methods: {
+    switchDarkmodeClass(status) {
+      if (status == true) {
+        document.body.setAttribute("data-theme", "dark");
+      } else {
+        document.body.setAttribute("data-theme", "light");
+      }
+    },
+  },
+  beforeCreate() {
+    const darkmode = localStorage.getItem("darkmode");
+    if (JSON.parse(darkmode) == true) {
+      document.body.setAttribute("data-theme", "dark");
+      this.$store.commit("darkmode", true);
+    } else if (JSON.parse(darkmode) == false) {
+      document.body.setAttribute("data-theme", "light");
+      this.$store.commit("darkmode", false);
+    } else {
+      document.body.removeAttribute("data-theme");
+      this.$store.commit("darkmode", null);
+    }
+  },
+  computed: {
+    getDarkmode() {
+      return this.$store.getters.getDarkmode;
+    },
+  },
+  watch: {
+    getDarkmode(oldmode, newmode) {
+      if (newmode == true) {
+        localStorage.setItem("darkmode", false);
+        this.switchDarkmodeClass(false);
+      } else {
+        localStorage.setItem("darkmode", true);
+        this.switchDarkmodeClass(true);
+      }
+    },
+  },
+};
+</script>
+
 <style>
 :root {
   --login-background-color: #f1e5f1;
@@ -43,6 +86,45 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   transition: all 0.3s ease;
+}
+
+[data-theme="light"] {
+  --main-background-color: #ffffff;
+  --second-background-color: #eeeeee;
+  --third-background-color: #e2e2e2;
+  --four-background-color: #d3d3d3;
+  --login-form-label-color: #4e4e4e;
+  --login-form-link-color: #4e4e4e;
+  --contrast-color: #fff;
+  --login-form-input-background-color: #f8f8f8;
+  --login-form-card-shadow: 0px 2px 20px -17px #000000ab;
+  --header-background-color: #ffffff8a;
+  --button-background-color: #f5f5f5;
+  --button-background-hover-color: #e7e7e7;
+  --button-color: #555;
+  --blue-color: #1d37c9;
+  --blue-light-color: #2a3ed0;
+  --blue-dark-color: #1127a3;
+  --green-color: #1ab406;
+  --green-light-color: #3beb24;
+  --purple-color: #8202a1;
+  --purple-light-color: #a409c9;
+  --logo-color: #222;
+  color: #222;
+}
+
+[data-theme="light"] a {
+  font-weight: 500;
+  color: #222;
+  text-decoration: inherit;
+}
+
+[data-theme="light"] a:hover {
+  color: #000;
+}
+
+[data-theme="light"] body {
+  color: #222;
 }
 
 a {
@@ -335,5 +417,38 @@ button:focus-visible {
   body {
     color: white;
   }
+}
+[data-theme="dark"] {
+  --main-background-color: #111111;
+  --second-background-color: #222222;
+  --third-background-color: #333333;
+  --four-background-color: #444;
+  --login-form-label-color: #fff;
+  --login-form-link-color: #fff;
+  --contrast-color: #000000;
+  --login-form-input-background-color: #333;
+  --login-form-input-focus-background-color: #555;
+  --login-form-card-shadow: 0px 2px 30px -7px #000;
+  --main-toolbar-nav-background-color: #222222;
+  --header-background-color: #0000008a;
+  --button-background-color: #333;
+  --button-background-hover-color: #444;
+  --button-color: #fff;
+  --logo-color: #d8d8d8;
+  color: white;
+}
+
+[data-theme="dark"] a {
+  font-weight: 500;
+  color: #fff;
+  text-decoration: inherit;
+}
+
+[data-theme="dark"] a:hover {
+  color: #fff;
+}
+
+[data-theme="dark"] body {
+  color: white;
 }
 </style>

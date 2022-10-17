@@ -31,5 +31,8 @@ export default {
   },
   setFetchStatus(state, payload) {
     state.fetchStatus = payload
+  },
+  darkmode(state, payload) {
+    state.darkmode = payload
   }
 };

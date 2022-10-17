@@ -5,7 +5,9 @@
 
         <Loading v-show="!load" />
 
+        
         <template v-if="load">
+          <h2 class="category-name">{{$route.params.category}}</h2>
           <vue-masonry-wall
             :items="getPhotosFromStorage"
             :options="{ width: 300, padding: 10 }"
@@ -30,7 +32,6 @@
           text="Ups... 😪 We couldn't find what you're looking for."
         />
       </div>
-
     </div>
   </Layout>
 </template>
@@ -100,10 +101,11 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     switch (to.name) {
-      case "tag":
+      case "category":
         next((vm) => {
           vm.scrollToTop()
-          vm.$store.dispatch("search", vm.$route.params.tag);
+          console.log(vm.$route.params.category)
+          vm.$store.dispatch("filter", [{ type: "category", value: vm.$route.params.category}]);
         });
         break;
 
@@ -112,15 +114,12 @@ export default {
         break;
     }
   },
-  beforeRouteUpdate(to) {
-      this.$store.dispatch("search", to.params.tag);
-  },
   beforeRouteLeave(to, from, next) {
-    if (from.name == "tag") {
-      this.$store.dispatch("destroySearching");
-      next();
-    }
-    next();
+    this.$store.dispatch("resetCategory");
+    next()
+  },
+  beforeRouteUpdate(to) {
+      this.$store.dispatch("filter", [{ type: "category", value: to.params.category}]);
   },
 };
 </script>
@@ -138,5 +137,9 @@ export default {
   svg {
     margin-right: 1rem;
   }
+}
+
+.category-name {
+  text-transform: capitalize;
 }
 </style>

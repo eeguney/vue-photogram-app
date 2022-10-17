@@ -34,7 +34,7 @@ footer {
     margin-top: 10px;
   }
   a {
-    color: initial;
+    color: inherit;
     transition: all 0.1s ease;
     &:hover {
       filter: drop-shadow(0 2px 10px var(--button-color));

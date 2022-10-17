@@ -6,20 +6,29 @@
           type="button"
           class="selector"
           @click="showCategory = !showCategory"
-          @blur="showCategory = false"
         >
           <font-awesome-icon :icon="['fas', 'fa-bars']" size="xl" />
         </button>
-        <ul class="grid" v-show="showCategory">
+        <div class="col drop-down" v-show="showCategory">
           <button
-            class="item"
-            v-for="item in $store.getters.getCategories"
-            :key="item.index"
-            tabindex="0"
+            class="homepage"
+            @click="
+              showCategory = false;
+              $router.push('/');
+            "
           >
-            {{ item }}
+            Homepage
           </button>
-        </ul>
+          <ul>
+            <button
+              class="item"
+              v-for="item in $store.getters.getCategories"
+              :key="item.index"
+            >
+              {{ item }}
+            </button>
+          </ul>
+        </div>
       </div>
       <div class="search">
         <input
@@ -34,7 +43,11 @@
         />
       </div>
       <div class="options-dropdown ml-1">
-        <button type="button" class="options-btn" @click="showOptions = !showOptions" @blur="showOptions = false">
+        <button
+          type="button"
+          class="options-btn"
+          @click="showOptions = !showOptions"
+        >
           <font-awesome-icon
             :icon="['fas', 'fa-ellipsis-vertical']"
             size="xl"
@@ -45,19 +58,30 @@
             <label>Switch Theme</label>
             <ul>
               <li>
-                <button type="button" aria-label="Auto theme">Auto</button>
+                <button
+                  type="button"
+                  aria-label="Auto theme"
+                  @click="removeDarkmode"
+                >
+                  Auto
+                </button>
               </li>
               <li>
                 <button
                   type="button"
                   class="active-theme"
                   aria-label="Dark theme"
+                  @click="toggleDarkmode(true)"
                 >
                   <font-awesome-icon :icon="['fas', 'fa-moon']" size="lg" />
                 </button>
               </li>
               <li>
-                <button type="button" aria-label="Light theme">
+                <button
+                  type="button"
+                  aria-label="Light theme"
+                  @click="toggleDarkmode(false)"
+                >
                   <font-awesome-icon :icon="['fas', 'fa-sun']" size="lg" />
                 </button>
               </li>
@@ -77,7 +101,7 @@ export default {
   data() {
     return {
       showCategory: false,
-      showOptions: false
+      showOptions: false,
     };
   },
   computed: {
@@ -90,6 +114,13 @@ export default {
       setTimeout(() => {
         this.$store.dispatch("search", e.target.value);
       }, 500);
+    },
+    toggleDarkmode(status) {
+      this.$store.dispatch("setdarkmode", status);
+    },
+    removeDarkmode() {
+      document.body.removeAttribute("data-theme");
+      localStorage.removeItem("darkmode");
     },
   },
 };
@@ -131,19 +162,19 @@ header {
     margin-right: 1rem;
     .selector {
       font-size: 16px;
-    font-weight: 600;
-    padding: 0.9rem 0.5rem;
-    background: transparent;
-    border-radius: 5px;
-    color: var(--button-color);
-    background-size: 150% 100%;
-    transition: all 0.4s ease;
+      font-weight: 600;
+      padding: 0.9rem 0.5rem;
+      background: transparent;
+      border-radius: 5px;
+      color: var(--button-color);
+      background-size: 150% 100%;
+      transition: all 0.4s ease;
       &:hover,
       &:focus {
         background-position: 100% 20%;
       }
     }
-    ul {
+    .drop-down {
       border-radius: 5px;
       position: absolute;
       top: 58px;
@@ -157,17 +188,34 @@ header {
       padding: 1rem 3rem 1rem 1rem;
       box-shadow: 0px 2px 15px -5px #000;
       column-gap: 1rem;
-      button {
-        border-radius: 0;
-        background-color: transparent;
-        font-size: 13px;
-        text-align: start;
-        padding: 0.5rem 4rem 0.5rem 0.5rem;
-        border-radius: 5px;
-        transition: all 0.1s ease;
+      max-height: 80vh;
+      overflow: auto;
+      .homepage {
+        background: transparent;
+        text-align: left;
+        padding: 0.5rem;
+        padding-top: 0;
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(8px);
         color: white;
-        &:hover {
-          background: #00000040;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+        button {
+          border-radius: 0;
+          background-color: transparent;
+          font-size: 13px;
+          text-align: start;
+          padding: 0.5rem 4rem 0.5rem 0.5rem;
+          border-radius: 5px;
+          transition: all 0.1s ease;
+          color: white;
+
+          &:hover {
+            background: #00000040;
+          }
         }
       }
     }
@@ -196,7 +244,6 @@ header {
       li {
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid var(--second-background-color);
         label {
           font-size: 14px;
           border-bottom: 1px solid var(--second-background-color);
@@ -219,5 +266,22 @@ header {
       }
     }
   }
+}
+* {
+  scrollbar-width: auto;
+  scrollbar-color: white;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: white;
+  border: 5px solid transparent;
 }
 </style>

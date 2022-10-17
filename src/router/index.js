@@ -1,9 +1,9 @@
 import Vue from "vue";
-// import store from "@/store";
 import VueRouter from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import HomeView from "../views/HomeView.vue";
 import TagView from "../views/TagView.vue";
+import CategoryView from "../views/CategoryView.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +27,11 @@ const routes = [
     path: "/tag/:tag",
     name: "tag",
     component: TagView,
+  },
+  {
+    path: "/category/:category",
+    name: "category",
+    component: CategoryView,
   },
   {
     path: "/login",

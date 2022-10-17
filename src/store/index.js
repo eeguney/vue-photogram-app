@@ -18,6 +18,7 @@ export default new Vuex.Store({
     filterSection: false,
     backdrop: false,
     fetchStatus: false,
+    darkmode: false,
     categories: [
       "backgrounds",
       "fashion",

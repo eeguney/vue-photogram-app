@@ -1,6 +1,6 @@
 <template>
   <div class="row items-center justify-between mb-1">
-    <div>
+    <div class="row">
       <!-- filter button on mobile -->
       <button
         type="button"
@@ -81,5 +81,8 @@ export default {
       color: white;
     }
   }
+}
+.search-label {
+  font-size: 12px;
 }
 </style>

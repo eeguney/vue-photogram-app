@@ -162,4 +162,10 @@ export default {
     commit("setSearchText", null);
     dispatch("filter", [{ type: "q", value: "" }]);
   },
+  resetCategory() {
+    urlParameters.category = null;
+  },
+  setdarkmode({ commit }, payload) {
+    commit("darkmode", payload)
+  }
 };

@@ -1,23 +1,30 @@
 <template>
   <div class="card">
-    <div
-      class="covers center"
-      :class="{ row: !load, grid: load, padding: load }"
+    <router-link
+      :to="{
+        name: 'category',
+        params: { category: Object.keys(this.album[0])[0]},
+      }"
     >
-      <Loading v-show="!load" noHeight small />
       <div
-        class="cover"
-        v-for="item in album"
-        :key="Object.values(item)[0].id"
-        :style="{
-          backgroundImage: `url(${Object.values(item)[0].previewURL})`,
-        }"
-        v-show="load"
-      ></div>
-    </div>
-    <label>
-      {{ substrTitle(Object.keys(this.album[0])[0]) }}
-    </label>
+        class="covers center"
+        :class="{ row: !load, grid: load, padding: load }"
+      >
+        <Loading v-show="!load" noHeight small />
+        <div
+          class="cover"
+          v-for="item in album"
+          :key="Object.values(item)[0].id"
+          :style="{
+            backgroundImage: `url(${Object.values(item)[0].previewURL})`,
+          }"
+          v-show="load"
+        ></div>
+      </div>
+      <label>
+        {{ substrTitle(Object.keys(this.album[0])[0]) }}
+      </label>
+    </router-link>
   </div>
 </template>
 
@@ -79,7 +86,6 @@ export default {
       height: 42px;
       background-size: cover;
       border-radius: 5px;
-      background-position: 50% 50%;
       filter: saturate(1);
       transition: all 0.3s ease;
     }
