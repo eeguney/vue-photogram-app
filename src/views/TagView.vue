@@ -2,7 +2,7 @@
   <Layout sidebar footer header>
     <div class="row">
       <div class="col flex-1 py-1 md-pl-1 mb-5">
-        <TimelineHeader />
+        <!-- <TimelineHeader  /> -->
 
         <Loading v-show="!load" />
 
@@ -32,9 +32,6 @@
         />
       </div>
 
-      <Albums :albums="getAlbumsFromStorage" />
-
-      <SingleModal v-if="$route.name == 'photo'" />
     </div>
   </Layout>
 </template>
@@ -44,10 +41,8 @@ import VueMasonryWall from "vue-masonry-wall";
 import Layout from "@/components/Layout.vue";
 import Card from "@/components/UI/Card/Card.vue";
 import Loading from "@/components/UI/Loading.vue";
-import Albums from "@/components/UI/Widget/Albums.vue";
-import TimelineHeader from "@/components/UI/TimelineHeader.vue";
+// import TimelineHeader from "@/components/UI/TimelineHeader.vue";
 import InfoAlert from "@/components/UI/Alert/Info.vue";
-import SingleModal from "@/components/SingleModal.vue";
 
 import { nextTick } from "vue";
 
@@ -57,30 +52,25 @@ export default {
     Card,
     VueMasonryWall,
     Loading,
-    Albums,
-    TimelineHeader,
+    // TimelineHeader,
     InfoAlert,
-    SingleModal,
   },
   data() {
     return {
       load: false,
     };
   },
-  async created() {
-    await this.$store.dispatch("fetchAll");
-  },
   methods: {
     async fetchMore() {
       await this.$store.dispatch("fetchMore");
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
   },
   computed: {
     getPhotosFromStorage() {
       return this.$store.getters.getPhotosTimeline;
-    },
-    getAlbumsFromStorage() {
-      return this.$store.getters.getAlbums;
     },
   },
   async updated() {
@@ -113,29 +103,24 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     switch (to.name) {
-      case "latest":
+      case "tag":
         next((vm) => {
-          vm.$store.dispatch("fetchLatest");
+          vm.scrollToTop()
+          vm.$store.dispatch("search", vm.$route.params.tag);
         });
         break;
-      case "home":
-        next((vm) => {
-          vm.$store.dispatch("fetchPopular");
-        });
-        break;
-      case "photo":
-        next((vm) => {
-          vm.$store.commit("toggleBackdrop");
-        });
-        break;
+
       default:
         next();
         break;
     }
   },
+  beforeRouteUpdate(to) {
+      this.$store.dispatch("search", to.params.tag);
+  },
   beforeRouteLeave(to, from, next) {
-    if (from.name == "photo") {
-      this.$store.commit("toggleBackdrop");
+    if (from.name == "tag") {
+      this.$store.dispatch("destroySearching");
       next();
     }
     next();

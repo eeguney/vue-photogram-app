@@ -1,10 +1,20 @@
 <template>
-  <router-link :to="{ name: 'photo', params: { id: data.id } }">
-    <div class="card">
-    <div class="thumbnail">
-      <img :src="data.webformatURL" class="img" loading="lazy" />
-    </div>
-    <label>{{ data.tags }} </label>
+  <div class="card">
+    <router-link :to="{ name: 'photo', params: { id: data.id } }">
+      <div class="thumbnail">
+        <img :src="data.webformatURL" class="img" loading="lazy" />
+      </div>
+    </router-link>
+
+    <label>
+      <router-link
+        v-for="(tag, key) in getTags"
+        class="tag"
+        :key="key"
+        :to="{ name: 'tag', params: { tag: tag } }"
+        >{{ tag }}</router-link
+      >
+    </label>
     <div class="card-info">
       <li>
         <font-awesome-icon :icon="['fas', 'fa-thumbs-up']" size="xs" />
@@ -16,7 +26,6 @@
       </li>
     </div>
   </div>
-  </router-link>
 </template>
 
 <script>
@@ -33,6 +42,11 @@ export default {
   methods: {
     substrTitle(title) {
       return title.substr(0, 20) + "...";
+    },
+  },
+  computed: {
+    getTags() {
+      return this.data.tags.split(",");
     },
   },
   mounted() {
@@ -52,6 +66,7 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     background-color: var(--second-background-color);
+    animation: backgroundChange 1.8s linear infinite;
     &:hover {
       .img {
         filter: saturate(1.6);
@@ -74,6 +89,13 @@ export default {
     padding: 6px 0;
     padding-bottom: 0;
     font-weight: 500;
+    .tag {
+      &:not(:last-child) {
+        &::after {
+          content: ",";
+        }
+      }
+    }
   }
   .card-info {
     display: flex;
@@ -83,6 +105,15 @@ export default {
       padding: 0 5px;
       font-size: 13px;
     }
+  }
+}
+
+@keyframes backgroundChange {
+  0% {
+    background: var(--main-background-color);
+  }
+  50% {
+    background: var(--second-background-color);
   }
 }
 </style>

@@ -25,7 +25,12 @@
       v-show="filterSection"
       @click="$store.commit('toggleFilterSection')"
     ></div>
-    <div class="backdrop-on-modal" v-show="backdrop"></div>
+
+    <div
+      class="backdrop-on-modal"
+      v-show="backdrop"
+      @click="hasHistory() ? $router.go(-1) : $router.push('/')"
+    ></div>
   </div>
 </template>
 
@@ -68,6 +73,11 @@ export default {
     },
     backdrop() {
       return this.$store.getters.getBackdrop;
+    },
+  },
+  methods: {
+    hasHistory() {
+      return window.history.length > 2;
     },
   },
 };

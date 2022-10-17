@@ -230,14 +230,13 @@ button:focus-visible {
 }
 .fixed {
   z-index: 1001;
-    position: fixed;
-    max-width: 1000px;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    top: 0;
+  position: fixed;
+  height: 100%;
+  width: fit-content;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
 }
 .close-section {
   position: absolute;
@@ -324,14 +323,14 @@ button:focus-visible {
     color: white;
   }
   a {
-  font-weight: 500;
-  color: #fff;
-  text-decoration: inherit;
-}
+    font-weight: 500;
+    color: #fff;
+    text-decoration: inherit;
+  }
 
-a:hover {
-  color: #fff;
-}
+  a:hover {
+    color: #fff;
+  }
 
   body {
     color: white;
