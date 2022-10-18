@@ -2,7 +2,7 @@
   <div class="card">
     <router-link :to="{ name: 'photo', params: { id: data.id } }">
       <div class="thumbnail">
-        <img :src="data.webformatURL" class="img" loading="lazy" :width="data.webformatWidth" :height="data.webformatHeight" />
+        <img :src="data.webformatURL" class="img" loading="lazy"  />
       </div>
     </router-link>
 
