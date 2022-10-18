@@ -113,10 +113,10 @@ export default {
             { type: "q", value: encodeURIComponent(payload) },
           ])
         ).then(({ data }) => {
-          if (data) {
+          if (data.hits) {
             if (data.hits.length > 0) {
               commit("setPhotosTimeline", data.hits);
-            } else commit("setPhotosTimeline", null);
+            } else commit("setPhotosTimeline", "not-found");
           }
         }),
       ]);
@@ -129,7 +129,7 @@ export default {
     try {
       await Promise.all([
         Axios.get(urlGenerator(payload)).then(({ data }) => {
-          if (data) {
+          if (data.hits) {
             if (data.hits.length > 0) {
               commit("setPhotosTimeline", data.hits);
             } else commit("setPhotosTimeline", null);
@@ -147,7 +147,7 @@ export default {
         Axios.get(
           urlGenerator([{ type: "page", value: urlParameters.page + 1 }])
         ).then(({ data }) => {
-          if (data) {
+          if (data.hits) {
             if (data.hits.length > 0) {
               commit("morePhotosTimeline", data.hits);
             }

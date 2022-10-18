@@ -11,7 +11,7 @@
           <vue-masonry-wall
             :items="getPhotosFromStorage"
             :options="{ width: 300, padding: 10 }"
-            v-if="load"
+            v-if="load && getPhotosFromStorage != 'not-found'"
           >
             <template v-slot:default="{ item }">
               <Card :data="item" />
@@ -28,7 +28,7 @@
         </template>
 
         <InfoAlert
-          v-if="load & (getPhotosFromStorage == null || [])"
+        v-if="load & (getPhotosFromStorage == 'not-found')"
           text="Ups... 😪 We couldn't find what you're looking for."
         />
       </div>
@@ -93,6 +93,8 @@ export default {
           this.$store.dispatch("fetchPopular");
           return;
         }
+      } else {
+        this.load = true;
       }
       setTimeout(() => {
         this.load = true;
