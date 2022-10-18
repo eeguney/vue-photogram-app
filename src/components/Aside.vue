@@ -78,6 +78,11 @@ aside {
     border-width: 0 0px 1px 0;
     border-style: solid;
     background-color: var(--header-background-color);
+    transition: all 0.3s ease;
+    &:hover {
+      background-color: var(--blue-color);
+      color: white;
+    }
     svg {
       margin-right: 10px;
     }

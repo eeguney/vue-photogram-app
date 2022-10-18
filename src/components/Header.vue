@@ -20,13 +20,15 @@
             Homepage
           </button>
           <ul>
-            <button
-              class="item"
+            <router-link
               v-for="item in $store.getters.getCategories"
               :key="item.index"
+              :to="{ name: 'category', params: { category: item } }"
             >
-              {{ item }}
-            </button>
+              <button class="item">
+                {{ item }}
+              </button>
+            </router-link>
           </ul>
         </div>
       </div>
