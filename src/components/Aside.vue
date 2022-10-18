@@ -75,7 +75,7 @@ aside {
     font-weight: 500;
     font-size: 1.1rem;
     border-color: var(--second-background-color);
-    border-width: 0 1px 1px 0;
+    border-width: 0 0px 1px 0;
     border-style: solid;
     background-color: var(--header-background-color);
     svg {
