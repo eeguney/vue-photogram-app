@@ -21,6 +21,8 @@
           :alt="photo.tags"
           class="single-image"
           v-show="getImageLoad"
+          :width="photo.imageWidth"
+          :height="photo.imageHeight"
           @load="imageload = true"
         />
         <footer class="row justify-center" v-show="getImageLoad">
@@ -49,7 +51,7 @@ export default {
   computed: {
     getImageLoad() {
       return this.imageload;
-    }
+    },
   },
   async mounted() {
     try {
