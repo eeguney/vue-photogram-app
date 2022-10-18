@@ -63,6 +63,7 @@
                 <button
                   type="button"
                   aria-label="Auto theme"
+                  :class="{activeTheme: isAutoTheme()}"
                   @click="removeDarkmode"
                 >
                   Auto
@@ -71,7 +72,7 @@
               <li>
                 <button
                   type="button"
-                  class="active-theme"
+                  :class="{activeTheme: activeTheme(true)}"
                   aria-label="Dark theme"
                   @click="toggleDarkmode(true)"
                 >
@@ -81,6 +82,7 @@
               <li>
                 <button
                   type="button"
+                  :class="{activeTheme: activeTheme(false) }"
                   aria-label="Light theme"
                   @click="toggleDarkmode(false)"
                 >
@@ -110,6 +112,9 @@ export default {
     getSearchText() {
       return this.$store.getters.getSearchText;
     },
+    getActiveTheme() {
+      return this.$store.getters.getDarkmode;
+    }
   },
   methods: {
     handleSearch(e) {
@@ -124,6 +129,15 @@ export default {
       document.body.removeAttribute("data-theme");
       localStorage.removeItem("darkmode");
     },
+    isAutoTheme() {
+      return document.body.getAttribute("dark-theme") ? true : false
+    },
+    activeTheme(type) {
+      if(this.getActiveTheme == type) {
+        return true
+      }
+      return false
+    }
   },
 };
 </script>
@@ -213,8 +227,7 @@ header {
           padding: 0.5rem 4rem 0.5rem 0.5rem;
           border-radius: 5px;
           transition: all 0.1s ease;
-          color: white;
-
+          color: white;      
           &:hover {
             background: #00000040;
           }
@@ -263,6 +276,10 @@ header {
           li {
             font-size: 13px;
             border: none;
+            .activeTheme {
+            background-color: var(--blue-color);
+            color: white;
+          }
           }
         }
       }
