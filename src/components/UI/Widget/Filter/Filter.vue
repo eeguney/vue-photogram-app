@@ -36,7 +36,7 @@ const defaultProps = {
   imageType: { type: "imageType", value: "all" },
   orientation: { type: "orientation", value: "all" },
   colors: { type: "colors", value: "null" },
-  safesearch: { type: "safesearch", value: "false" },
+  safesearch: { type: "safesearch", value: "true" },
   page: { type: "page", value: 1 }
 };
 
