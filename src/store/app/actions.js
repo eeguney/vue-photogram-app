@@ -6,7 +6,7 @@ let urlParameters = {
   orientation: "all",
   category: null,
   colors: null,
-  safesearch: "false",
+  safesearch: "true",
   order: "popular",
   page: 1,
   perPage: 20,
